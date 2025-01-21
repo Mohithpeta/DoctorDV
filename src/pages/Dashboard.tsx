@@ -1,80 +1,202 @@
 import React from 'react';
 import { Sidebar } from '../components/Sidebar';
-import { ExpertCard } from '../components/ExpertCard';
-import { Search } from 'lucide-react';
+import { Video, Users, Activity, Heart, Upload } from 'lucide-react';
+import { Header } from '../components/Header';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-const experts = [
-  {
-    name: "Dr. Sarah Johnson",
-    title: "Gynecologist & Women's Health",
-    imageUrl: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=400"
-  },
-  {
-    name: "Dr. Michael Chen",
-    title: "Pediatrician",
-    imageUrl: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400"
-  },
-  {
-    name: "Dr. Lisa Williams",
-    title: "Family Medicine",
-    imageUrl: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=400"
-  },
-  {
-    name: "Dr. James Wilson",
-    title: "Cardiologist",
-    imageUrl: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400"
-  }
-];
+interface StatCardProps {
+  icon: React.ReactNode;
+  value: number;
+  label: string;
+}
 
-export function Dashboard() {
+interface VideoAnalytics {
+  views: number;
+  likes: number;
+  comments: number;
+}
+
+interface DashboardProps {
+  username?: string;  // Made optional
+  avatarUrl?: string; // Made optional
+  stats?: {
+    videos: number;
+    profileViews: number;
+    liveStreams: number;
+    followers: number;
+  };
+  videoAnalytics?: VideoAnalytics;
+  downloads?: number;
+  shares?: number;
+}
+
+const defaultStats = {
+  videos: 0,
+  profileViews: 0,
+  liveStreams: 0,
+  followers: 0
+};
+
+const defaultVideoAnalytics = {
+  views: 0,
+  likes: 0,
+  comments: 0
+};
+
+const StatCard: React.FC<StatCardProps> = ({ icon, value, label }) => (
+  <motion.div
+    className="bg-white rounded-lg p-4 shadow-sm relative"
+    whileHover={{ scale: 1.02 }}
+    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+  >
+    <div className="absolute top-2 right-2">
+      <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
+        {icon}
+      </div>
+    </div>
+    <div className="mt-6">
+      <div className="text-3xl font-bold mb-1">{value.toLocaleString()}</div>
+      <div className="text-gray-600 text-sm">{label}</div>
+    </div>
+  </motion.div>
+);
+
+const Dashboard: React.FC<DashboardProps> = ({
+  username,
+  avatarUrl,
+  stats,
+  videoAnalytics,
+  downloads = 0,
+  shares = 0,
+}) => {
+  // Handle empty or invalid username
+  const displayName = username?.trim() || 'Guest User';
+  const userAvatar = avatarUrl || '/api/placeholder/32/32';
+  const currentStats = stats || defaultStats;
+  const currentAnalytics = videoAnalytics || defaultVideoAnalytics;
+
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
-      <main className="flex-1 p-8 overflow-y-auto">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-semibold text-gray-900">LifeCourse Experts</h1>
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search experts..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E91E63] focus:border-transparent"
-              />
-              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+      <main className="flex-1 overflow-hidden flex flex-col">
+        <Header username={displayName} avatarUrl={userAvatar} />
+        <div className="flex-1 p-8 overflow-y-auto">
+          <div className="max-w-6xl mx-auto">
+            {/* Overall Stats */}
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Overall Stats</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+               <Link to="/my-dashboard/videogrid"> <StatCard 
+                  icon={<Video className="w-4 h-4 text-pink-600" />} 
+                  value={currentStats.videos} 
+                  label="Videos Uploaded" 
+                /></Link>
+                <Link to="/profile"><StatCard 
+                  icon={<Users className="w-4 h-4 text-pink-600" />} 
+                  value={currentStats.profileViews} 
+                  label="Profile Views" 
+                /></Link>
+                <Link to="/live"><StatCard 
+                  icon={<Activity className="w-4 h-4 text-pink-600" />} 
+                  value={currentStats.liveStreams} 
+                  label="Live Sessions" 
+                /></Link>
+                <Link to="profile"><StatCard 
+                  icon={<Heart className="w-4 h-4 text-pink-600" />} 
+                  value={currentStats.followers} 
+                  label="Followers" 
+                /></Link>
+              </div>
             </div>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {experts.map((expert) => (
-              <ExpertCard key={expert.name} {...expert} />
-            ))}
-          </div>
-
-          <div className="mt-12">
-            <h2 className="text-xl font-semibold mb-6">Featured Content</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="aspect-video bg-gray-200 rounded-lg"></div>
-              ))}
+            {/* Quick Access */}
+            <div className="mb-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Access</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center space-x-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <Upload className="w-5 h-5 text-pink-600" />
+                  <span className="text-gray-700">Upload Video</span>
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center space-x-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <Activity className="w-5 h-5 text-pink-600" />
+                  <span className="text-gray-700">Go Live</span>
+                </motion.button>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-12">
-            <h2 className="text-xl font-semibold mb-6">Ongoing Live Sessions</h2>
-            <div className="bg-white rounded-lg shadow-sm p-4">
-              <div className="flex items-center space-x-4">
-                <img
-                  src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=150"
-                  alt="Session host"
-                  className="w-16 h-16 rounded-full object-cover"
-                />
-                <div>
-                  <h3 className="font-semibold">Understanding Pregnancy Health</h3>
-                  <p className="text-sm text-gray-600">Dr. Sarah Johnson • Starting in 5 minutes</p>
-                </div>
-                <button className="ml-auto px-4 py-2 bg-[#E91E63] text-white rounded-md">
-                  Join Now
-                </button>
+            {/* Video Stats */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">Recent Video Stats</h2>
+                <motion.div
+                  className="bg-white rounded-lg shadow-sm p-6 overflow-hidden"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <div className="relative">
+                    <img
+                      src="/api/placeholder/800/320"
+                      alt="Preconception Nutrition"
+                      className="w-full h-64 object-cover rounded-lg"
+                    />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                      <h3 className="text-4xl font-bold text-white text-center">
+                        Preconception<br />Nutrition
+                      </h3>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-6">Video Analytics</h2>
+                <motion.div
+                  className="bg-white rounded-lg shadow-sm p-6"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                >
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Views</span>
+                      <span>{currentAnalytics.views.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Likes</span>
+                      <span>{currentAnalytics.likes.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Comments</span>
+                      <span>{currentAnalytics.comments.toLocaleString()}</span>
+                    </div>
+                    <div className="pt-4 border-t border-gray-200">
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <span>Downloads</span>
+                        <span>{downloads.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-sm text-gray-600">
+                        <span>Shares</span>
+                        <span>{shares.toLocaleString()}</span>
+                      </div>
+                    </div>
+                    <motion.button 
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full bg-pink-600 text-white py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors flex items-center justify-between"
+                    >
+                      <span>Go to analytics</span>
+                      <span>→</span>
+                    </motion.button>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -82,4 +204,6 @@ export function Dashboard() {
       </main>
     </div>
   );
-}
+};
+
+export default Dashboard;

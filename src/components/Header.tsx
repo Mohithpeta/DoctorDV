@@ -1,13 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, Mic, Bell, ChevronDown } from 'lucide-react';
 
-
 interface HeaderProps {
   placeholder?: string;
   onSearch?: (query: string) => void;
+  username?: string;
+  avatarUrl?: string;
 }
 
-export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderProps) {
+export function Header({
+  placeholder = "Search LifeCourse",
+  onSearch,
+  username = "Guest User", // Default to "Guest User"
+  avatarUrl = "/api/placeholder/32/32" // Default avatar URL if none provided
+}: HeaderProps) {
   const [showTopicDropdown, setShowTopicDropdown] = useState(false);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -160,6 +166,19 @@ export function Header({ placeholder = "Search LifeCourse", onSearch }: HeaderPr
                   ))}
                 </div>
               )}
+            </div>
+
+            {/* User Profile */}
+            <div className="relative flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
+                <img
+                  src={avatarUrl}
+                  alt={username}
+                  className="w-8 h-8 rounded-full"
+                />
+                <span className="text-sm font-semibold text-gray-700">{username}</span>
+              </div>
+              <ChevronDown className="w-4 h-4 text-gray-600" />
             </div>
           </div>
         </div>

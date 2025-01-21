@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Users, MessageCircle, User, Video } from 'lucide-react';
+import { Home, Users, MessageCircle, User, Video, Bell} from 'lucide-react';
 
 interface NavLinkProps {
   icon: React.ReactNode;
@@ -38,6 +38,12 @@ export function Sidebar() {
       </div>
       <nav className="space-y-2">
         <NavLink
+          icon={<User className="w-5 h-5" />} 
+          label="Dashboard"
+          to="/my-dashboard"
+          isActive={currentPath === '/my-dashboard'}
+        />
+        <NavLink
           icon={<Home className="w-5 h-5" />}
           label="Home"
           to="/home"
@@ -61,6 +67,12 @@ export function Sidebar() {
           to="/community"
           isActive={currentPath === '/community'}
         />
+        <NavLink
+          icon={<Bell className="w-5 h-5" />}
+          label="Notification"
+          to="/notification"
+          isActive={currentPath === '/notification'}
+          />
         <NavLink
           icon={<User className="w-5 h-5" />}
           label="Profile"
