@@ -8,10 +8,10 @@ import { Live } from './pages/Live';
 import { Community } from './pages/Community';
 import { DoctorProfile } from './pages/DoctorProfile';
 import Dashboard from './pages/Dashboard';
-import { Navigation } from './pages/Dashboard/Navigation';
-import VideoGrid from './pages/Dashboard/VideoGrid';
-import DashboardContent from './pages/Dashboard/index';
+import VideosUploaded from './pages/Dashboard/VideosUploaded';
 import Notification from './pages/Notification';
+import PendingApproval from './pages/Dashboard/PendingApproval';
+import { UploadVideos } from './pages/Dashboard/UploadVideos';
 
 function App() {
   const userData = {
@@ -19,7 +19,7 @@ function App() {
     avatarUrl: '/path/to/avatar.jpg',
     stats: {
       videos: 12,
-      profileViews: 12345,
+      pendingApprovals: 5,
       liveStreams: 5,
       followers: 6789,
     },
@@ -57,6 +57,30 @@ function App() {
       views: 8000,
       duration: '10:45',
     },
+    {
+      id: '4',
+      title: 'Causes of Incontinence',
+      thumbnail: '/images/video3.jpg',
+      uploadDate: '2025-01-05',
+      views: 600,
+      duration: '10:45',
+    },
+    {
+      id: '5',
+      title: 'Remedies for Back pain',
+      thumbnail: '/images/video3.jpg',
+      uploadDate: '2025-01-05',
+      views: 7500,
+      duration: '10:45',
+    },
+    {
+      id: '6',
+      title: 'Reasons for Hypertension',
+      thumbnail: '/images/video3.jpg',
+      uploadDate: '2025-01-05',
+      views: 50,
+      duration: '10:45',
+    },
   ];
 
   const handleEditVideo = (id: string) => {
@@ -87,13 +111,23 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile/:id" element={<DoctorProfile />} />
-        <Route path="/navigation" element={<Navigation />} />
-        <Route path="/dashboard" element={<DashboardContent /> } />
         <Route path="/notification" element={<Notification />} />
+        <Route path="/pendingapproval" element={<PendingApproval />} />
         <Route
-          path="/my-dashboard/videogrid"
+  path="/my-dashboard/uploadvideos"
+  element={
+    <UploadVideos
+      isOpen={true} // Adjust this as needed
+      onClose={() => console.log('Upload modal closed')}
+      redirectOnClose =  '/my-dashboard/videosuploaded' 
+    />
+  }
+/>
+
+        <Route
+          path="/my-dashboard/videosuploaded"
           element={
-            <VideoGrid
+            <VideosUploaded
               videos={sampleVideos}
               onEdit={handleEditVideo}
               onDelete={handleDeleteVideo}

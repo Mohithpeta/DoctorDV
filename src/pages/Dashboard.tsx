@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sidebar } from '../components/Sidebar';
-import { Video, Users, Activity, Heart, Upload } from 'lucide-react';
+import { Video, Upload, Ban, Radio, User } from 'lucide-react';
 import { Header } from '../components/Header';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -18,37 +18,37 @@ interface VideoAnalytics {
 }
 
 interface DashboardProps {
-  username?: string;  // Made optional
-  avatarUrl?: string; // Made optional
+  username?: string; // Optional
+  avatarUrl?: string; // Optional
   stats?: {
     videos: number;
-    profileViews: number;
+    pendingApprovals: number; // Required
     liveStreams: number;
     followers: number;
   };
-  videoAnalytics?: VideoAnalytics;
-  downloads?: number;
-  shares?: number;
+  videoAnalytics?: VideoAnalytics; // Optional
+  downloads?: number; // Optional
+  shares?: number; // Optional
 }
 
 const defaultStats = {
   videos: 0,
-  profileViews: 0,
+  pendingApprovals: 0, // Default value
   liveStreams: 0,
-  followers: 0
+  followers: 0,
 };
 
 const defaultVideoAnalytics = {
   views: 0,
   likes: 0,
-  comments: 0
+  comments: 0,
 };
 
 const StatCard: React.FC<StatCardProps> = ({ icon, value, label }) => (
   <motion.div
     className="bg-white rounded-lg p-4 shadow-sm relative"
     whileHover={{ scale: 1.02 }}
-    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
   >
     <div className="absolute top-2 right-2">
       <div className="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center">
@@ -70,7 +70,6 @@ const Dashboard: React.FC<DashboardProps> = ({
   downloads = 0,
   shares = 0,
 }) => {
-  // Handle empty or invalid username
   const displayName = username?.trim() || 'Guest User';
   const userAvatar = avatarUrl || '/api/placeholder/32/32';
   const currentStats = stats || defaultStats;
@@ -87,26 +86,34 @@ const Dashboard: React.FC<DashboardProps> = ({
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-gray-900 mb-6">Overall Stats</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-               <Link to="/my-dashboard/videogrid"> <StatCard 
-                  icon={<Video className="w-4 h-4 text-pink-600" />} 
-                  value={currentStats.videos} 
-                  label="Videos Uploaded" 
-                /></Link>
-                <Link to="/profile"><StatCard 
-                  icon={<Users className="w-4 h-4 text-pink-600" />} 
-                  value={currentStats.profileViews} 
-                  label="Profile Views" 
-                /></Link>
-                <Link to="/live"><StatCard 
-                  icon={<Activity className="w-4 h-4 text-pink-600" />} 
-                  value={currentStats.liveStreams} 
-                  label="Live Sessions" 
-                /></Link>
-                <Link to="profile"><StatCard 
-                  icon={<Heart className="w-4 h-4 text-pink-600" />} 
-                  value={currentStats.followers} 
-                  label="Followers" 
-                /></Link>
+                <Link to="/my-dashboard/videosuploaded">
+                  <StatCard
+                    icon={<Video className="w-4 h-4 text-pink-600" />}
+                    value={currentStats.videos}
+                    label="Videos Uploaded"
+                  />
+                </Link>
+                <Link to="/pendingapproval">
+                  <StatCard
+                    icon={<Ban className="w-4 h-4 text-pink-600" />}
+                    value={currentStats.pendingApprovals}
+                    label="Pending approvals"
+                  />
+                </Link>
+                <Link to="/live">
+                  <StatCard
+                    icon={<Radio className="w-4 h-4 text-pink-600" />}
+                    value={currentStats.liveStreams}
+                    label="Live Sessions"
+                  />
+                </Link>
+                <Link to="profile">
+                  <StatCard
+                    icon={<User className="w-4 h-4 text-pink-600" />}
+                    value={currentStats.followers}
+                    label="Followers"
+                  />
+                </Link>
               </div>
             </div>
 
@@ -114,22 +121,26 @@ const Dashboard: React.FC<DashboardProps> = ({
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Access</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <Link to="/my-dashboard/uploadvideos">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center space-x-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <Upload className="w-5 h-5 text-pink-600" />
-                  <span className="text-gray-700">Upload Video</span>
+                  <Upload className="w-5 h-5 text-[#A32E76]" />
+                  <span className="text-[#A32E76]">Upload Video</span>
                 </motion.button>
+                </Link>
+                <Link to="/live">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center space-x-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <Activity className="w-5 h-5 text-pink-600" />
-                  <span className="text-gray-700">Go Live</span>
+                  <Radio className="w-5 h-5 text-[#A32E76]" />
+                  <span className="text-[#A32E76]">Go Live</span>
                 </motion.button>
+                </Link>
               </div>
             </div>
 
@@ -140,7 +151,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                 <motion.div
                   className="bg-white rounded-lg shadow-sm p-6 overflow-hidden"
                   whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   <div className="relative">
                     <img
@@ -162,7 +173,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                 <motion.div
                   className="bg-white rounded-lg shadow-sm p-6"
                   whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   <div className="space-y-4">
                     <div className="flex justify-between text-sm text-gray-600">
@@ -187,10 +198,10 @@ const Dashboard: React.FC<DashboardProps> = ({
                         <span>{shares.toLocaleString()}</span>
                       </div>
                     </div>
-                    <motion.button 
+                    <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-pink-600 text-white py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors flex items-center justify-between"
+                      className="w-full bg-[#A32E76] text-white py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors flex items-center justify-between"
                     >
                       <span>Go to analytics</span>
                       <span>→</span>

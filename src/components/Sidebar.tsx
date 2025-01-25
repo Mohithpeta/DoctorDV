@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Users, MessageCircle, User, Video, Bell} from 'lucide-react';
+import { Home, GraduationCap, MessageCircle, User, Radio, Bell, LayoutDashboard} from 'lucide-react';
 
 interface NavLinkProps {
   icon: React.ReactNode;
@@ -17,7 +17,7 @@ function NavLink({ icon, label, to, isActive }: NavLinkProps) {
       onClick={() => navigate(to)}
       className={`w-full flex items-center px-4 py-2 rounded-md transition-colors ${
         isActive
-          ? 'text-[#E91E63] bg-pink-50'
+          ? 'text-[#A32E76] bg-pink-50'
           : 'text-gray-700 hover:bg-gray-100'
       }`}
     >
@@ -34,11 +34,11 @@ export function Sidebar() {
   return (
     <div className="w-64 bg-white h-screen border-r border-gray-200 p-4">
       <div className="mb-8">
-        <h1 className="text-xl font-semibold text-[#E91E63]">LifeCourse</h1>
+        <h1 className="text-xl font-semibold text-[#A32E76]">LifeCourse®Experts</h1>
       </div>
       <nav className="space-y-2">
         <NavLink
-          icon={<User className="w-5 h-5" />} 
+          icon={<LayoutDashboard className="w-5 h-5" />} 
           label="Dashboard"
           to="/my-dashboard"
           isActive={currentPath === '/my-dashboard'}
@@ -50,13 +50,13 @@ export function Sidebar() {
           isActive={currentPath === '/home'}
         />
         <NavLink
-          icon={<Users className="w-5 h-5" />}
+          icon={<GraduationCap className="w-5 h-5" />}
           label="LifeCourse Experts"
           to="/experts"
           isActive={currentPath === '/experts'}
         />
         <NavLink
-          icon={<Video className="w-5 h-5" />}
+          icon={<Radio className="w-5 h-5" />}
           label="Live"
           to="/live"
           isActive={currentPath === '/live'}

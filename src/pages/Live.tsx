@@ -274,7 +274,7 @@ export function Live() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-4 py-2 rounded-full text-sm ${
                     activeTab === tab.id 
-                      ? 'bg-pink-500 text-white' 
+                      ? 'bg-[#A32E76] text-white' 
                       : 'bg-white text-gray-600'
                   }`}
                 >
@@ -286,13 +286,13 @@ export function Live() {
             <div className="flex space-x-4">
               <button
                 onClick={() => setShowScheduleModal(true)}
-                className="px-4 py-2 bg-pink-500 text-white rounded-full text-sm hover:bg-pink-600 transition"
+                className="px-4 py-2 bg-[#A32E76] text-white rounded-full text-sm hover:bg-pink-600 transition"
               >
                 Schedule a live
               </button>
               <button 
                 onClick={() => setShowStartLiveModal(true)}
-                className="px-4 py-2 bg-pink-500 text-white rounded-full text-sm hover:bg-pink-600 transition"
+                className="px-4 py-2 bg-[#A32E76] text-white rounded-full text-sm hover:bg-pink-600 transition"
               >
                 Start live instantly
               </button>
@@ -316,7 +316,7 @@ export function Live() {
                     <p className="text-xs text-gray-500 mt-1">{session.doctor}</p>
                     <p className="text-xs text-gray-400 mt-1">{session.time}</p>
                   </div>
-                  <button className="px-4 py-2 text-pink-500 border border-pink-500 rounded-full text-sm hover:bg-pink-500 hover:text-white transition">
+                  <button className="px-4 py-2 text-pink-500 border border-pink-500 rounded-full text-sm hover:bg-[#A32e76] hover:text-white transition">
                     Notify Me
                   </button>
                 </div>

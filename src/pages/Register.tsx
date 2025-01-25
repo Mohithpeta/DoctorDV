@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { AuthLayout } from '../components/AuthLayout';
-import { Input } from '../components/Input';
-import { Button } from '../components/Button';
-import { CheckCircle } from 'lucide-react';
-import { cn } from '../utils/cn';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthLayout } from "../components/AuthLayout";
+import { Input } from "../components/Input";
+import { Button } from "../components/Button";
+import { CheckCircle } from "lucide-react";
+import { cn } from "../utils/cn";
 
 type Step = 1 | 2 | 3 | 4;
 
 export function Register() {
   const [step, setStep] = useState<Step>(1);
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    name: '',
-    phone: '',
-    birthCertificate: null as File | null,
+    email: "",
+    password: "",
+    name: "",
+    phone: "",
+    workExperience: "",
+    clinicName: "",
+    verificationFile: null as File | null,
     interests: [] as string[],
   });
 
@@ -28,179 +30,267 @@ export function Register() {
     if (step < 4) {
       handleNext();
     } else {
-      console.log('Submit:', formData);
+      console.log("Submit:", formData);
     }
-  };
-
-  const interests = [
-    'Art & Culture',
-    'Technology',
-    'Sports',
-    'Music',
-    'Education',
-    'Health & Wellness',
-    'Business',
-    'Travel'
-  ];
-
-  const toggleInterest = (interest: string) => {
-    setFormData(prev => ({
-      ...prev,
-      interests: prev.interests.includes(interest)
-        ? prev.interests.filter(i => i !== interest)
-        : [...prev.interests, interest]
-    }));
   };
 
   return (
     <AuthLayout>
-      <div className="bg-white p-8 rounded-lg shadow-md w-full">
-        {step < 5 ? (
-          <>
-            <div className="mb-8">
-              <div className="flex justify-between items-center mb-2">
-                {[1, 2, 3, 4].map((s) => (
-                  <div
-                    key={s}
-                    className={cn(
-                      'h-2 flex-1 rounded-full',
-                      s <= step ? 'bg-[#E91E63]' : 'bg-gray-200',
-                      s !== 4 && 'mr-2'
-                    )}
-                  />
-                ))}
+      <div className="max-w-md w-full mx-auto" >
+
+        <div className="bg-white p-8 rounded-3xl shadow-lg w-full">
+          {step < 5 ? (
+            <>
+              {/* Progress Dots */}
+              <div className="mb-8">
+                <div className="flex justify-center items-center mb-4 gap-2">
+                  {[1, 2, 3, 4].map((s) => (
+                    <div
+                      key={s}
+                      className={cn(
+                        "w-3 h-3 rounded-full transition-colors",
+                        s === step
+                          ? "bg-[#a32e76]"
+                          : s < step
+                          ? "bg-[#a32e76] opacity-50"
+                          : "bg-gray-200"
+                      )}
+                    />
+                  ))}
+                </div>
               </div>
-              <p className="text-sm text-center text-gray-500">
-                Step {step} of 4
-              </p>
-            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {step === 1 && (
-                <>
-                  <h2 className="text-2xl font-semibold text-center mb-6">
-                    Welcome to LifeCourse!
-                  </h2>
-                  <Input
-                    label="Email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
-                  />
-                  <Input
-                    label="Password"
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    required
-                  />
-                  <Button variant="google" fullWidth className="mt-4">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-                         alt="Google" 
-                         className="w-5 h-5 mr-2" />
-                    Continue with Google
-                  </Button>
-                  <p className="text-center text-sm mt-4">
-                    Already have an account? <Link to="/login" className="text-[#E91E63] hover:text-[#D81B60]">Login</Link>
-                  </p>
-                </>
-              )}
-
-              {step === 2 && (
-                <>
-                  <h2 className="text-2xl font-semibold text-center mb-6">
-                    Personal Information
-                  </h2>
-                  <Input
-                    label="Full Name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    required
-                  />
-                  <Input
-                    label="Phone Number"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    required
-                  />
-                </>
-              )}
-
-              {step === 3 && (
-                <>
-                  <h2 className="text-2xl font-semibold text-center mb-6">
-                    Document Upload
-                  </h2>
-                  <div className="space-y-4">
-                    <p className="text-sm text-gray-600">
-                      Please upload a copy of your birth certificate
-                    </p>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {step === 1 && (
+                  <>
+                    <h2 className="text-xl font-medium text-center mb-6">
+                      To Join as our Lifecourse Experts!
+                      <br />
+                      <span className="text-[#a32e76]">Signup!</span>
+                    </h2>
                     <Input
-                      type="file"
-                      accept=".pdf,.jpg,.jpeg,.png"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0] || null;
-                        setFormData({ ...formData, birthCertificate: file });
-                      }}
+                      type="email"
+                      placeholder="Enter E-mail id"
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="rounded-xl px-4 py-3 border-gray-200"
                       required
                     />
-                  </div>
-                </>
-              )}
-
-              {step === 4 && (
-                <>
-                  <h2 className="text-2xl font-semibold text-center mb-6">
-                    Your Interests
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Select topics that interest you:
-                  </p>
-                  <div className="grid grid-cols-2 gap-3">
-                    {interests.map((interest) => (
-                      <button
-                        key={interest}
-                        type="button"
-                        onClick={() => toggleInterest(interest)}
-                        className={cn(
-                          'p-3 rounded-md text-sm font-medium transition-colors',
-                          formData.interests.includes(interest)
-                            ? 'bg-[#E91E63] text-white'
-                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                        )}
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      value={formData.password}
+                      onChange={(e) =>
+                        setFormData({ ...formData, password: e.target.value })
+                      }
+                      className="rounded-xl px-4 py-3 border-gray-200"
+                      required
+                    />
+                    <Button
+                      type="submit"
+                      fullWidth
+                      className="bg-[#a32e76] hover:bg-[#821e5e] text-white rounded-xl py-3"
+                    >
+                      Next
+                    </Button>
+                    <div className="relative my-6">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-200" />
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-gray-500">or</span>
+                      </div>
+                    </div>
+                    <Button
+                      variant="google"
+                      fullWidth
+                      className="rounded-xl py-3 border border-gray-200"
+                    >
+                      <img
+                        src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                        alt="Google"
+                        className="w-5 h-5 mr-2"
+                      />
+                      Continue with Google
+                    </Button>
+                    <p className="text-center text-sm mt-6">
+                      Already have an account?{" "}
+                      <Link
+                        to="/login"
+                        className="text-[#a32e76] hover:underline"
                       >
-                        {interest}
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
+                        Login
+                      </Link>
+                    </p>
+                  </>
+                )}
 
-              <Button type="submit" fullWidth>
-                {step === 4 ? 'Complete Registration' : 'Next'}
-              </Button>
-            </form>
-          </>
-        ) : (
-          <div className="text-center">
-            <div className="flex justify-center mb-4">
-              <CheckCircle className="h-16 w-16 text-[#E91E63]" />
+                {step === 2 && (
+                  <>
+                    <h2 className="text-xl font-medium text-center mb-6">
+                      Complete Your Registration
+                      <br />
+                      <span className="text-[#a32e76] text-sm">
+                        Please provide accurate details for verification
+                      </span>
+                    </h2>
+                    <Input
+                      placeholder="Enter Name"
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className="rounded-xl px-4 py-3 border-gray-200"
+                      required
+                    />
+                    <Input
+                      placeholder="Enter Medical Registration Number"
+                      value={formData.phone}
+                      onChange={(e) =>
+                        setFormData({ ...formData, phone: e.target.value })
+                      }
+                      className="rounded-xl px-4 py-3 border-gray-200"
+                      required
+                    />
+                    <select
+                      className="w-full rounded-xl px-4 py-3 border border-gray-200 bg-white"
+                      defaultValue=""
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Motherhood Stage
+                      </option>
+                      <option value="postpartum">Postpartum</option>
+                      <option value="preconception">Preconception</option>
+                      <option value="pregnancy">Pregnancy</option>
+                      <option value="parenting">Parenting</option>
+                    </select>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      className="bg-[#a32e76] hover:bg-[#821e5e] text-white rounded-xl py-3 mt-4"
+                    >
+                      Next
+                    </Button>
+                  </>
+                )}
+
+                {step === 3 && (
+                  <>
+                    <h2 className="text-xl font-medium text-center mb-6">
+                      Let Lifecourse Know about You
+                      <br />
+                        You'll know everything through the course
+                    </h2>
+                    <Input
+                      placeholder="Enter years in numbers"
+                      label="Years of work experience"
+                      value={formData.workExperience}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        if (value >= 0 && value <= 100) {
+                          setFormData({
+                            ...formData,
+                            workExperience: e.target.value,
+                          });
+                        }
+                      }}
+                      type="number"
+                      min="0"
+                      max="100"
+                      className="rounded-xl px-4 py-3 border-gray-200"
+                      required
+                    />
+                    <Input
+                      placeholder="Enter Hospital / Clinic Name"
+                      label="Hospital / Clinic Name"
+                      value={formData.clinicName}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          clinicName: e.target.value,
+                        })
+                      }
+                      className="rounded-xl px-4 py-3 border-gray-200"
+                      required
+                    />
+                    <div className="space-y-4">
+                      <div className="border-2 border-dashed border-gray-200 rounded-xl p-6 text-center">
+                        <input
+                          type="file"
+                          accept=".pdf,.jpg,.jpeg,.png"
+                          className="hidden"
+                          id="file-upload"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0] || null;
+                            setFormData({ ...formData, verificationFile: file });
+                          }}
+                        />
+                        <label
+                          htmlFor="file-upload"
+                          className="cursor-pointer text-[#a32e76] hover:underline"
+                        >
+                          Upload Verification Documents (e.g., license, Aadhar ID)
+                        </label>
+                      </div>
+                    </div>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      className="bg-[#a32e76] hover:bg-[#821e5e] text-white rounded-xl py-3 mt-4"
+                    >
+                      Submit for Verification
+                    </Button>
+                  </>
+                )}
+
+                {step === 4 && (
+                  <>
+                    <div className="text-center mb-8">
+                      <CheckCircle className="h-16 w-16 text-[#a32e76] mx-auto mb-4" />
+                      <h2 className="text-xl font-medium text-[#a32e76]">
+                        Verification typically takes 2-3 business days...
+                      </h2>
+                      <p className="text-sm text-gray-600 mt-2">
+                        You will receive an email upon approval
+                      </p>
+                    </div>
+                    <Link to="/login" >
+                    <Button
+                      type="submit"
+                      fullWidth
+                      className="bg-[#a32e76] hover:bg-[#821e5e] text-white rounded-xl py-3"
+                    >
+                      SUBMITTED SUCCESSFULLY
+                    </Button>
+                    </Link>
+                  </>
+                )}
+              </form>
+            </>
+          ) : (
+            <div className="text-center">
+              <CheckCircle className="h-16 w-16 text-[#a32e76] mx-auto mb-4" />
+              <h2 className="text-xl font-medium text-[#a32e76] mb-2">
+                Registration Completed!
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Your account is being processed. Verification may take up to 24
+                hours.
+              </p>
+              <Link to="/login">
+                <Button
+                  fullWidth
+                  className="bg-[#a32e76] hover:bg-[#821e5e] text-white rounded-xl py-3"
+                >
+                  Back to Login
+                </Button>
+              </Link>
             </div>
-            <h2 className="text-2xl font-semibold mb-2">
-              Registration Completed!
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Your account is being processed. Verification may take up to 24 hours.
-            </p>
-            <Link to="/login">
-              <Button fullWidth>
-                Back to Login
-              </Button>
-            </Link>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </AuthLayout>
   );
