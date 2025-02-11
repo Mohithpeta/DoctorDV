@@ -1,87 +1,95 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { X, Upload, Check } from 'lucide-react';
+import { X, Check } from 'lucide-react';
 
 interface UploadVideosProps {
   isOpen: boolean;
   onClose: () => void;
-  redirectOnClose?: string; // Add this prop for conditional routing
+  redirectOnClose?: string;
 }
 
 interface VideoForm {
-  title: string;
+  youtubeUrl: string;
   category: string;
-  file: File | null; // 'File' for video file, default is null
+  title?: string;
+  description?: string;
 }
 
 export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState<VideoForm>({
-    title: '',
+    youtubeUrl: '',
     category: '',
-    file: null,
+    description: '',
   });
-  const [errors, setErrors] = useState<Partial<VideoForm>>({});
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [errors, setErrors] = useState<{ youtubeUrl?: string; category?: string }>({});
   const navigate = useNavigate();
 
-  const categories = [
-    'Preconception',
-    'Pregnancy',
-    'Postpartum',
-    'Parenting',
-    'Mental Health',
-    'Nutrition',
-  ];
+  const categories = ['Preconception', 'Pregnancy', 'Postpartum', 'Parenting', 'Mental Health', 'Nutrition'];
 
   const validateForm = (): boolean => {
     const newErrors: Partial<VideoForm> = {};
-    if (!formData.title || formData.title.trim().length < 3) {
-      newErrors.title = 'Title must be at least 3 characters long';
+    if (!formData.youtubeUrl.trim()) {
+      newErrors.youtubeUrl = 'YouTube link is required';
     }
-    if (!formData.category) {
+    if (!formData.category.trim()) {
       newErrors.category = 'Please select a category';
-    }
-    if (!formData.file) {
-      newErrors.file = 'Please select a video file';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0]; // Capture selected file
-    if (selectedFile) {
-      const validTypes = ['video/mp4', 'video/quicktime', 'video/x-msvideo']; // Supported formats
-      if (!validTypes.includes(selectedFile.type)) {
-        setErrors({ ...errors, file: 'Please select a valid video file (mp4, mov, or avi)' });
-        return;
-      }
-      if (selectedFile.size > 100 * 1024 * 1024) {
-        setErrors({ ...errors, file: 'File size must be less than 100MB' });
-        return;
-      }
-
-      // Set file only if valid
-      setFormData((prev) => ({ ...prev, file: selectedFile }));
-      setErrors({ ...errors, file: undefined }); // Clear file errors
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Simulate submission success
-      setTimeout(() => {
-        setIsSubmitted(true);
-      }, 500);
+    
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null;
+  
+    if (!token || !user) {
+      alert("Authentication error! Please log in again.");
+      return;
+    }
+  
+    const payload = {
+      youtube_url: formData.youtubeUrl,  // ✅ Matches FastAPI schema
+      title: formData.title || "Untitled Video",
+      description: formData.description || "No description",
+      category: formData.category || "Other",
+      // uploaded_by: user.id,  // ✅ Sending doctor’s ID
+    };
+  
+    console.log("Uploading video with data:", payload);  // 🔥 Debugging
+  
+    try {
+      const response = await fetch("http://127.0.0.1:8000/videos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,  // ✅ Sending token correctly
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Upload failed:", errorData);
+        throw new Error(errorData.detail || "Failed to upload video");
+      }
+  
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error uploading video:", error);
+      alert("Upload failed! Please check console for details.");
     }
   };
+  
+  
+  
 
   const handleClose = () => {
     onClose();
     if (redirectOnClose) {
-      navigate(redirectOnClose); // Redirect based on the passed prop
+      navigate(redirectOnClose);
     }
   };
 
@@ -103,28 +111,27 @@ export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosP
               <Check className="w-8 h-8 text-green-500" />
             </div>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">
-              Video submitted successfully for admin approval
+              Video submitted successfully
             </h3>
           </div>
         ) : (
           <div className="p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Upload Your Video</h2>
-
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Upload YouTube Video</h2>
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Video Title</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">YouTube Link</label>
                 <input
                   type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  value={formData.youtubeUrl}
+                  onChange={(e) => setFormData({ ...formData, youtubeUrl: e.target.value })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A32E76] focus:border-transparent transition-all"
-                  placeholder="Enter Title"
+                  placeholder="Paste YouTube video link here"
                 />
-                {errors.title && <p className="mt-1 text-sm text-red-500">{errors.title}</p>}
+                {errors.youtubeUrl && <p className="mt-1 text-sm text-red-500">{errors.youtubeUrl}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Video Category</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -141,45 +148,20 @@ export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosP
               </div>
 
               <div>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileSelect}
-                  accept=".mp4,.mov,.avi"
-                  className="hidden"
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description (Optional)</label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A32E76] focus:border-transparent transition-all"
+                  placeholder="Write a short description (optional)"
                 />
-                <div
-                  onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-[#A32E76] transition-all"
-                >
-                  {formData.file ? (
-  <div className="text-gray-600">
-    <Check className="w-8 h-8 mx-auto mb-2 text-green-500" />
-    <p>{formData.file.name}</p> {/* Display file name here */}
-  </div>
-
-
-                  ) : (
-                    <div className="text-gray-500">
-                      <Upload className="w-10 h-10 mx-auto mb-2 text-[#A32E76]" />
-                      <p className="text-sm">Drag and drop video files to upload</p>
-                      <button
-                        type="button"
-                        className="mt-2 px-4 py-2 text-sm bg-[#A32E76] text-white rounded-full hover:bg-[#8E2968] transition-colors"
-                      >
-                        Select Files
-                      </button>
-                    </div>
-                  )}
-                </div>
-                {errors.file && <p className="mt-1 text-sm text-red-500">{errors.file}</p>}
               </div>
 
               <button
                 type="submit"
                 className="w-full px-4 py-3 bg-[#A32E76] text-white rounded-lg hover:bg-[#8E2968] transition-colors font-medium"
               >
-                Submit for admin approval
+                Submit Video
               </button>
             </form>
           </div>

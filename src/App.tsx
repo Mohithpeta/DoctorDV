@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { LifeCourseExperts } from './pages/LifeCourseExperts';
 import { Profile } from './pages/Profile';
@@ -12,7 +12,13 @@ import VideosUploaded from './pages/Dashboard/VideosUploaded';
 import Notification from './pages/Notification';
 import PendingApproval from './pages/Dashboard/PendingApproval';
 import { UploadVideos } from './pages/Dashboard/UploadVideos';
+import AuthGuard from './components/AuthGuard';
 
+const ProtectedRoutes = () => (
+  <AuthGuard>
+    <Outlet />
+  </AuthGuard>
+  );
 function App() {
   const userData = {
     username: 'John Doe',
@@ -98,12 +104,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/my-dashboard" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        <Route element={<ProtectedRoutes />} >
         <Route path="/home" element={<Home />} />
-        <Route
-          path="/my-dashboard"
-          element={<Dashboard {...userData} />}
-        />
+        <Route path="/my-dashboard" element={<Dashboard {...userData} />} />
         <Route path="/experts" element={<LifeCourseExperts />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/live" element={<Live />} />
@@ -113,6 +120,7 @@ function App() {
         <Route path="/profile/:id" element={<DoctorProfile />} />
         <Route path="/notification" element={<Notification />} />
         <Route path="/pendingapproval" element={<PendingApproval />} />
+        </Route>
         <Route
   path="/my-dashboard/uploadvideos"
   element={
