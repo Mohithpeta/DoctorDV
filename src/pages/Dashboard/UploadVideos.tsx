@@ -61,7 +61,7 @@ export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosP
     console.log("Uploading video with data:", payload);  // 🔥 Debugging
   
     try {
-      const response = await fetch("http://127.0.0.1:8000/videos", {
+      const response = await fetch("http://127.0.0.1:8000/videos/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

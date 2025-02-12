@@ -14,11 +14,13 @@ import PendingApproval from './pages/Dashboard/PendingApproval';
 import { UploadVideos } from './pages/Dashboard/UploadVideos';
 import AuthGuard from './components/AuthGuard';
 
+// 🔹 Protect ALL Routes Before Register & Login
 const ProtectedRoutes = () => (
   <AuthGuard>
     <Outlet />
   </AuthGuard>
-  );
+);
+
 function App() {
   const userData = {
     username: 'John Doe',
@@ -58,7 +60,7 @@ function App() {
     {
       id: '3',
       title: 'Nutrition Tips for Beginners',
-      thumbnail: '/images/video3.jpg',
+      thumbnail: '/images/video4.jpg',
       uploadDate: '2025-01-05',
       views: 8000,
       duration: '10:45',
@@ -104,46 +106,50 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Redirect to Login if not authenticated */}
         <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        
-        <Route element={<ProtectedRoutes />} >
-        <Route path="/home" element={<Home />} />
-        <Route path="/my-dashboard" element={<Dashboard {...userData} />} />
-        <Route path="/experts" element={<LifeCourseExperts />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/live" element={<Live />} />
-        <Route path="/community" element={<Community />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/profile/:id" element={<DoctorProfile />} />
-        <Route path="/notification" element={<Notification />} />
-        <Route path="/pendingapproval" element={<PendingApproval />} />
-        </Route>
-        <Route
-  path="/my-dashboard/uploadvideos"
-  element={
-    <UploadVideos
-      isOpen={true} // Adjust this as needed
-      onClose={() => console.log('Upload modal closed')}
-      redirectOnClose =  '/my-dashboard/videosuploaded' 
-    />
-  }
-/>
 
-        <Route
-          path="/my-dashboard/videosuploaded"
-          element={
-            <VideosUploaded
-              videos={sampleVideos}
-              onEdit={handleEditVideo}
-              onDelete={handleDeleteVideo}
-              onPlay={handlePlayVideo}
-              type="uploaded"
-            />
-          }
-        />
+        {/* Apply authentication protection to ALL routes */}
+        <Route element={<ProtectedRoutes />}>
+          {/* Authentication Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
+          {/* Protected Pages */}
+          <Route path="/home" element={<Home />} />
+          <Route path="/my-dashboard" element={<Dashboard {...userData} />} />
+          <Route path="/experts" element={<LifeCourseExperts />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/live" element={<Live />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/profile/:id" element={<DoctorProfile />} />
+          <Route path="/notification" element={<Notification />} />
+          <Route path="/pendingapproval" element={<PendingApproval />} />
+
+          {/* Video Management Routes */}
+          <Route
+            path="/my-dashboard/uploadvideos"
+            element={
+              <UploadVideos
+                isOpen={true}
+                onClose={() => console.log('Upload modal closed')}
+                redirectOnClose="/my-dashboard/videosuploaded"
+              />
+            }
+          />
+          <Route
+            path="/my-dashboard/videosuploaded"
+            element={
+              <VideosUploaded
+                videos={sampleVideos}
+                onEdit={handleEditVideo}
+                onDelete={handleDeleteVideo}
+                onPlay={handlePlayVideo}
+                type="uploaded"
+              />
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
