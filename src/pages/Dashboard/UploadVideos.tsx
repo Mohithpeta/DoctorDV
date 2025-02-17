@@ -42,6 +42,10 @@ export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosP
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!validateForm()) {
+      return;
+    }
+  
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!) : null;
   
