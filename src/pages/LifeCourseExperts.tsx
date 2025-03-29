@@ -9,7 +9,7 @@ export function LifeCourseExperts() {
   
   const categories = ['All', 'Postpartum Hypertension', 'Anal Incontinence', 'Obesity', 'Diabetes Mellitus', 'Dyspareunia'];
   
-  const experts = [
+  const experts = useMemo(() => [
     {
       name: "Dr. Sarah Johnson",
       id: 1, 
@@ -57,7 +57,7 @@ export function LifeCourseExperts() {
       specialization: "Cardiologist",
       image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400"
     }
-  ];
+  ], []);
 
   const filteredExperts = useMemo(() => {
     return experts.filter((expert) => {
