@@ -36,7 +36,7 @@ export function Register() {
       handleNext();
     } else {
       try {
-        const response = await axios.post("http://localhost:8000/auth/signup/doctor", formData, {
+        const response = await axios.post("https://deepvital-backend.onrender.com/auth/signup/doctor", formData, {
           headers: { "Content-Type": "application/json" },
         });
 
