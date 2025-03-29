@@ -44,7 +44,7 @@ export function Community() {
     { name: "Postpartum", count: 0 }, // Added "count" for each category
   ];
 
-  const groups = [
+  const groups = useMemo(() => [
     {
       id: 1,
       title: "Mental Health in Preconception",
@@ -74,7 +74,7 @@ export function Community() {
       price:"20$",
       createdAt: "10/01/2024",
     },
-  ];
+  ], []);
 
 
   const toggleFilter = (categoryName: string) => {
@@ -91,7 +91,7 @@ export function Community() {
   };
 
     // Close filters when clicking outside
-    const handleOutsideClick = useCallback((event: MouseEvent) => {
+    const handleOutsideClick = useCallback((event: globalThis.MouseEvent) => {
       if (
         filterModalRef.current &&
         !filterModalRef.current.contains(event.target as Node) &&
