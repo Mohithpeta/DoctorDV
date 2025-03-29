@@ -32,10 +32,10 @@ export function Header({
   const notificationDropdownRef = useRef<HTMLDivElement>(null);
   const topicDropdownRef = useRef<HTMLDivElement>(null);
 
-  const useOutsideClick = (ref: any, callback: () => void) => {
+  const useOutsideClick = (ref: React.RefObject<HTMLElement>, callback: () => void) => {
     useEffect(() => {
-      const handleClickOutside = (event: any) => {
-        if (ref.current && !ref.current.contains(event.target)) {
+      const handleClickOutside = (event: MouseEvent) => {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
           callback();
         }
       };
@@ -79,10 +79,10 @@ export function Header({
             <button 
               onClick={handleMicClick}
               className={`p-2 border-y border-r border-gray-300 rounded-r-md hover:bg-gray-50 transition-colors ${
-                isRecording ? 'bg-pink-50 text-[#E91E63]' : ''
+                isRecording ? 'bg-pink-50 text-[#5E17EB]' : ''
               }`}
             >
-              <Mic className={`w-5 h-5 ${isRecording ? 'text-[#E91E63] animate-pulse' : 'text-gray-500'}`} />
+              <Mic className={`w-5 h-5 ${isRecording ? 'text-[#5E17EB] animate-pulse' : 'text-gray-500'}`} />
             </button>
           </div>
 
@@ -95,7 +95,7 @@ export function Header({
                 className="p-2 hover:bg-gray-100 rounded-full relative transition-transform hover:scale-105"
               >
                 <Bell className="w-5 h-5 text-gray-600" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-[#E91E63] rounded-full animate-pulse"></span>
+                <span className="absolute top-1 right-1 w-2 h-2 bg-[#5E17EB] rounded-full animate-pulse"></span>
               </button>
 
               {/* Notifications Dropdown */}
