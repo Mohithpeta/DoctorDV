@@ -128,7 +128,7 @@ export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosP
                   type="text"
                   value={formData.youtubeUrl}
                   onChange={(e) => setFormData({ ...formData, youtubeUrl: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A32E76] focus:border-transparent transition-all"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent transition-all"
                   placeholder="Paste YouTube video link here"
                 />
                 {errors.youtubeUrl && <p className="mt-1 text-sm text-red-500">{errors.youtubeUrl}</p>}
@@ -139,7 +139,7 @@ export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosP
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A32E76] focus:border-transparent transition-all"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent transition-all"
                 >
                   <option value="">Choose video category</option>
                   {categories.map((category) => (
@@ -156,14 +156,14 @@ export function UploadVideos({ isOpen, onClose, redirectOnClose }: UploadVideosP
                 <textarea
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#A32E76] focus:border-transparent transition-all"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#5E17EB] focus:border-transparent transition-all"
                   placeholder="Write a short description (optional)"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full px-4 py-3 bg-[#A32E76] text-white rounded-lg hover:bg-[#8E2968] transition-colors font-medium"
+                className="w-full px-4 py-3 bg-[#5E17EB] text-white rounded-lg hover:bg-[#8E2968] transition-colors font-medium"
               >
                 Submit Video
               </button>

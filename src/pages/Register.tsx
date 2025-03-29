@@ -53,7 +53,7 @@ export function Register() {
 
   return (
     <AuthLayout>
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl border-2 border-[#A32E76]">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl border-2 border-[#5E17EB]">
         {step < 5 ? (
           <>
             {/* Progress Bar */}
@@ -64,7 +64,7 @@ export function Register() {
                     key={s}
                     className={cn(
                       "h-2 flex-1 rounded-full",
-                      s <= step ? "bg-[#A32E76]" : "bg-gray-200",
+                      s <= step ? "bg-[#5E17EB]" : "bg-gray-200",
                       s !== 4 && "mr-2"
                     )}
                   />
@@ -76,7 +76,7 @@ export function Register() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {step === 1 && (
                 <>
-                  <h2 className="text-2xl font-semibold text-center text-[#A32E76] mb-6">
+                  <h2 className="text-2xl font-semibold text-center text-[#5E17EB] mb-6">
                     To Join as our Lifecourse Experts!
                   </h2>
                   <Input
@@ -100,7 +100,7 @@ export function Register() {
                   <Button
                     variant="google"
                     fullWidth
-                    className="mt-4 border-[#A32E76] text-[#A32E76]"
+                    className="mt-4 border-[#5E17EB] text-[#5E17EB]"
                   >
                     <img
                       src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
@@ -111,7 +111,7 @@ export function Register() {
                   </Button>
                   <p className="text-center text-sm mt-4">
                     Already have an account?{" "}
-                    <Link to="/login" className="text-[#A32E76] hover:text-[#871c5b]">
+                    <Link to="/login" className="text-[#5E17EB] hover:text-[#871c5b]">
                       Login
                     </Link>
                   </p>
@@ -120,7 +120,7 @@ export function Register() {
 
               {step === 2 && (
                 <>
-                  <h2 className="text-2xl font-semibold text-center text-[#A32E76] mb-6">
+                  <h2 className="text-2xl font-semibold text-center text-[#5E17EB] mb-6">
                     Complete Your Registration
                   </h2>
                   <Input
@@ -140,7 +140,7 @@ export function Register() {
                     required
                   />
                   <label className="block">
-                    <span className="text-[#A32E76] font-medium">
+                    <span className="text-[#5E17EB] font-medium">
                       Select Motherhood Stage Specialization
                     </span>
                     <select
@@ -148,7 +148,7 @@ export function Register() {
                       onChange={(e) =>
                         setFormData({ ...formData, motherhoodStage: e.target.value })
                       }
-                      className="mt-2 block w-full rounded-md border border-[#A32E76] bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#A32E76] focus:ring-opacity-50 text-lg py-2 px-2"
+                      className="mt-2 block w-full rounded-md border border-[#5E17EB] bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#5E17EB] focus:ring-opacity-50 text-lg py-2 px-2"
                       required
                     >
                       <option value="" disabled>Select Motherhood Stage</option>
@@ -163,7 +163,7 @@ export function Register() {
 
               {step === 3 && (
                 <>
-                  <h2 className="text-2xl font-semibold text-center text-[#A32E76] mb-6">
+                  <h2 className="text-2xl font-semibold text-center text-[#5E17EB] mb-6">
                     Professional Information
                   </h2>
                   <Input
@@ -200,7 +200,7 @@ export function Register() {
                       />
                       <label
                         htmlFor="file-upload"
-                        className="cursor-pointer text-[#A32E76] hover:underline"
+                        className="cursor-pointer text-[#5E17EB] hover:underline"
                       >
                         Upload Verification Documents (e.g., license, Aadhar ID)
                       </label>
@@ -213,8 +213,8 @@ export function Register() {
               {step === 4 && (
                 <>
                   <div className="text-center mb-8">
-                    <CheckCircle className="h-16 w-16 text-[#A32E76] mx-auto mb-4" />
-                    <h2 className="text-xl font-medium text-[#A32E76]">
+                    <CheckCircle className="h-16 w-16 text-[#5E17EB] mx-auto mb-4" />
+                    <h2 className="text-xl font-medium text-[#5E17EB]">
                       Verification typically takes 2-3 business days...
                     </h2>
                     <p className="text-sm text-gray-600 mt-2">
@@ -224,7 +224,7 @@ export function Register() {
                   <Button
                     type="submit"
                     fullWidth
-                    className="bg-[#A32E76] hover:bg-[#871c5b] text-white"
+                    className="bg-[#5E17EB] hover:bg-[#871c5b] text-white"
                   >
                     Complete Registration
                   </Button>
@@ -235,7 +235,7 @@ export function Register() {
                 <Button
                   type="submit"
                   fullWidth
-                  className="bg-[#A32E76] hover:bg-[#871c5b] text-white"
+                  className="bg-[#5E17EB] hover:bg-[#871c5b] text-white"
                 >
                   Next
                 </Button>
@@ -245,8 +245,8 @@ export function Register() {
         ) : (
           // Success Screen (Step 5)
           <div className="text-center">
-            <CheckCircle className="h-16 w-16 text-[#A32E76] mx-auto mb-4" />
-            <h2 className="text-2xl font-semibold text-[#A32E76] mb-2">
+            <CheckCircle className="h-16 w-16 text-[#5E17EB] mx-auto mb-4" />
+            <h2 className="text-2xl font-semibold text-[#5E17EB] mb-2">
               Registration Completed!
             </h2>
             <p className="text-gray-600 mb-6">
@@ -254,7 +254,7 @@ export function Register() {
             </p>
             <Link
               to="/login"
-              className="block w-full text-center bg-[#A32E76] hover:bg-[#871c5b] text-white py-2 rounded-lg"
+              className="block w-full text-center bg-[#5E17EB] hover:bg-[#871c5b] text-white py-2 rounded-lg"
             >
               Back to Login
             </Link>

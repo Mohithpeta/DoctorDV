@@ -45,7 +45,7 @@ const PendingApproval = () => {
         <div className="p-8">
           {/* Section Title */}
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-[#A32E76] font-bold text-3xl">
+            <h2 className="text-[#5E17EB] font-bold text-3xl">
               Pending Approval Requests
             </h2>
           </div>

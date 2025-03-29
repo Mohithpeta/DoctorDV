@@ -96,7 +96,7 @@ export function LifeCourseExperts() {
                   onClick={() => setActiveFilter(category)}
                   className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
                     activeFilter === category 
-                      ? 'bg-[#A32E76] text-white' 
+                      ? 'bg-[#5E17EB] text-white' 
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
@@ -120,7 +120,7 @@ export function LifeCourseExperts() {
                   <div className="p-4">
                     <h3 className="font-medium text-gray-900">{expert.name}</h3>
                     <p className="text-sm text-gray-600">{expert.specialization}</p>
-                    <button className="mt-3 text-[#A32E76] text-sm font-medium hover:text-[#D81B60]">                     
+                    <button className="mt-3 text-[#5E17EB] text-sm font-medium hover:text-[#D81B60]">                     
                       <Link to={`/profile/${expert.id}`}>View Profile</Link>
                     </button>
                   </div>

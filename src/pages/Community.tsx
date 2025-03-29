@@ -15,7 +15,7 @@ interface CreateGroupForm {
 }
 
 export function Community() {
-  const themeColor = "#A32E76";
+  const themeColor = "#5E17EB";
   const [showFilters, setShowFilters] = useState(false);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
   const filterModalRef = useRef<HTMLDivElement>(null);
@@ -251,7 +251,7 @@ export function Community() {
               />
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-[#A32E76] transition-colors"
+                className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-[#5E17EB] transition-colors"
               >
                 {formData.image ? (
                   <div className="relative">
@@ -292,7 +292,7 @@ export function Community() {
                     type="radio"
                     checked={formData.type === 'free'}
                     onChange={() => setFormData({ ...formData, type: 'free', price: '' })}
-                    className="text-[#A32E76] focus:ring-[#A32E76]"
+                    className="text-[#5E17EB] focus:ring-[#5E17EB]"
                   />
                   <span>Free (Open to all users without any subscription fees)</span>
                 </label>
@@ -301,7 +301,7 @@ export function Community() {
                     type="radio"
                     checked={formData.type === 'paid'}
                     onChange={() => setFormData({ ...formData, type: 'paid' })}
-                    className="text-[#A32E76] focus:ring-[#A32E76]"
+                    className="text-[#5E17EB] focus:ring-[#5E17EB]"
                   />
                   <span>Paid (Requires members to pay a fee for access to this group)</span>
                 </label>
@@ -326,7 +326,7 @@ export function Community() {
     <div className="fixed inset-0 bg-white/95 flex items-center justify-center z-50">
       <div className="text-center p-8">
         <div className="w-32 h-32 mx-auto mb-6">
-          <svg viewBox="0 0 100 100" className="w-full h-full text-[#A32E76]">
+          <svg viewBox="0 0 100 100" className="w-full h-full text-[#5E17EB]">
             <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="6" />
             <path
               d="M25,50 L45,70 L75,30"
@@ -338,7 +338,7 @@ export function Community() {
             />
           </svg>
         </div>
-        <h3 className="text-2xl font-semibold text-[#A32E76]">Group Created Successfully</h3>
+        <h3 className="text-2xl font-semibold text-[#5E17EB]">Group Created Successfully</h3>
       </div>
     </div>
   );
@@ -381,7 +381,7 @@ export function Community() {
                   className={`px-6 py-2.5 rounded-full text-sm ${
                     activeFilters.includes(category.name)
                       ? "bg-[#941E67] text-white"
-                      : "bg-[#F8F8F8] text-[#A32E76]"
+                      : "bg-[#F8F8F8] text-[#5E17EB]"
                   }`}
                 >
 

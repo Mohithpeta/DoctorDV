@@ -9,11 +9,21 @@ interface Video {
   _id: string; // MongoDB ID
   title: string;
   thumbnail: string;
+  uploadDate: string;
   upload_date: string;
   views: number;
 }
 
-const VideosUploaded: React.FC = () => {
+interface VideosUploadedProps {
+  videos: Video[];
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void; 
+  onPlay: (id: string) => void;
+  type: string;
+}
+
+
+const VideosUploaded: React.FC<VideosUploadedProps> = () => {
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>(''); // Added error state for better feedback
@@ -85,9 +95,9 @@ const VideosUploaded: React.FC = () => {
         <div className="p-8">
           {/* Section Title */}
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-[#A32E76] font-bold text-3xl">Videos Uploaded</h2>
+            <h2 className="text-[#5E17EB] font-bold text-3xl">Videos Uploaded</h2>
             <Link to="/my-dashboard/uploadvideos">
-              <button className="bg-[#A32E76] text-white px-5 py-2 rounded-lg shadow-md hover:bg-[#931e5c] transition-all text-sm font-medium">
+              <button className="bg-[#5E17EB] text-white px-5 py-2 rounded-lg shadow-md hover:bg-[#931e5c] transition-all text-sm font-medium">
                 Upload New Video
               </button>
             </Link>
@@ -111,7 +121,7 @@ const VideosUploaded: React.FC = () => {
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <button
                         onClick={() => handlePlay(video)}
-                        className="bg-[#A32E76] text-white px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2"
+                        className="bg-[#5E17EB] text-white px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2"
                       >
                         <Play className="w-5 h-5" /> Play
                       </button>
@@ -130,7 +140,7 @@ const VideosUploaded: React.FC = () => {
                     <div className="flex justify-between items-center">
                       <Link to={`/my-dashboard/edit-video/${video._id}`}>
                         <button
-                          className="text-[#A32E76] flex items-center gap-2 hover:text-[#931e5c] transition-all text-sm font-medium"
+                          className="text-[#5E17EB] flex items-center gap-2 hover:text-[#931e5c] transition-all text-sm font-medium"
                         >
                           <Edit className="w-4 h-4" /> Edit
                         </button>

@@ -127,8 +127,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center space-x-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <Upload className="w-5 h-5 text-[#A32E76]" />
-                  <span className="text-[#A32E76]">Upload Video</span>
+                  <Upload className="w-5 h-5 text-[#5E17EB]" />
+                  <span className="text-[#5E17EB]">Upload Video</span>
                 </motion.button>
                 </Link>
                 <Link to="/live">
@@ -137,8 +137,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center space-x-2 bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <Radio className="w-5 h-5 text-[#A32E76]" />
-                  <span className="text-[#A32E76]">Go Live</span>
+                  <Radio className="w-5 h-5 text-[#5E17EB]" />
+                  <span className="text-[#5E17EB]">Go Live</span>
                 </motion.button>
                 </Link>
               </div>
@@ -201,7 +201,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full bg-[#A32E76] text-white py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors flex items-center justify-between"
+                      className="w-full bg-[#5E17EB] text-white py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors flex items-center justify-between"
                     >
                       <span>Go to analytics</span>
                       <span>→</span>

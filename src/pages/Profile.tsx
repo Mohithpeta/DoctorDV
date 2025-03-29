@@ -61,7 +61,7 @@ export function Profile() {
                     alt={formData.name}
                     className="w-32 h-32 rounded-full object-cover"
                   />
-                  <button className="absolute bottom-0 right-0 p-2 bg-[#A32E76] text-white rounded-full">
+                  <button className="absolute bottom-0 right-0 p-2 bg-[#5E17EB] text-white rounded-full">
                     <Camera className="w-4 h-4" />
                   </button>
                 </div>
@@ -70,7 +70,7 @@ export function Profile() {
                     <div>
                       <div className="flex items-center gap-2">
                         <h1 className="text-2xl font-semibold">{formData.name}</h1>
-                        <span className="bg-[#A32E76]/10 text-[#A32E76] text-xs px-2 py-1 rounded-full">
+                        <span className="bg-[#5E17EB]/10 text-[#5E17EB] text-xs px-2 py-1 rounded-full">
                           Verified
                         </span>
                       </div>
@@ -80,7 +80,7 @@ export function Profile() {
                       </p>
                       <div className="flex items-center gap-4 mt-2">
                         <span className="flex items-center gap-1 text-sm text-gray-600">
-                          <span className="w-2 h-2 bg-[#A32E76] rounded-full"></span>
+                          <span className="w-2 h-2 bg-[#5E17EB] rounded-full"></span>
                           {formData.location}
                         </span>
                         <span className="text-sm text-gray-600">
@@ -90,20 +90,20 @@ export function Profile() {
                     </div>
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="flex items-center gap-2 px-4 py-2 text-[#A32E76] hover:bg-[#A32E76]/10 rounded-lg transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 text-[#5E17EB] hover:bg-[#5E17EB]/10 rounded-lg transition-colors"
                     >
                       <Edit2 className="w-4 h-4" />
                       Edit Profile
                     </button>
                   </div>
                   <div className="flex items-center gap-4 mt-4">
-                    <a href={formData.socialLinks.linkedin} className="text-gray-600 hover:text-[#A32E76]">
+                    <a href={formData.socialLinks.linkedin} className="text-gray-600 hover:text-[#5E17EB]">
                       <Linkedin className="w-5 h-5" />
                     </a>
-                    <a href={formData.socialLinks.youtube} className="text-gray-600 hover:text-[#A32E76]">
+                    <a href={formData.socialLinks.youtube} className="text-gray-600 hover:text-[#5E17EB]">
                       <Youtube className="w-5 h-5" />
                     </a>
-                    <a href={formData.socialLinks.instagram} className="text-gray-600 hover:text-[#A32E76]">
+                    <a href={formData.socialLinks.instagram} className="text-gray-600 hover:text-[#5E17EB]">
                       <Instagram className="w-5 h-5" />
                     </a>
                   </div>
@@ -124,7 +124,7 @@ export function Profile() {
                   onClick={() => setActiveTab(tab)}
                   className={`px-4 py-2 rounded-full text-sm whitespace-nowrap transition-colors ${
                     activeTab === tab
-                      ? 'bg-[#A32E76] text-white'
+                      ? 'bg-[#5E17EB] text-white'
                       : 'bg-white text-gray-700 hover:bg-gray-50'
                   }`}
                 >
@@ -144,7 +144,7 @@ export function Profile() {
                       className="w-full h-48 object-cover"
                     />
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                      <button className="bg-white/90 text-[#A32E76] px-4 py-2 rounded-full text-sm font-medium">
+                      <button className="bg-white/90 text-[#5E17EB] px-4 py-2 rounded-full text-sm font-medium">
                         View
                       </button>
                     </div>
@@ -286,7 +286,7 @@ export function Profile() {
                 </button>
                 <button
                   onClick={handleSave}
-                  className="px-4 py-2 bg-[#A32E76] text-white rounded-md hover:bg-[#8E2968]"
+                  className="px-4 py-2 bg-[#5E17EB] text-white rounded-md hover:bg-[#8E2968]"
                 >
                   Save Changes
                 </button>

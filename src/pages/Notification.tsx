@@ -4,7 +4,7 @@ import { Sidebar } from "../components/Sidebar";
 import { Header } from "../components/Header";
 
 const Notification = () => {
-  const themeColor = "#a32e76"; // Define theme color
+  const themeColor = "#5E17EB"; // Define theme color
   const notificationsData = [
     {
       id: 1,
