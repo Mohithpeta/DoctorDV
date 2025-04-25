@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Stethoscope, MessageCircle, User, Radio, Bell, LayoutDashboard, Menu, X } from 'lucide-react';
+import { Home, Stethoscope, MessageCircle, User, Radio, LayoutDashboard, Menu, X } from 'lucide-react';  //Bell
 import LifecourseLogo from '../assets/Lifecourse Logo.png';
+import { BarChart } from 'lucide-react';
 
 interface NavLinkProps {
   icon: React.ReactNode;
@@ -95,12 +96,26 @@ export function Sidebar() {
             onClick={() => setIsOpen(false)}
           />
           <NavLink
+            icon={<MessageCircle className="w-5 h-5" />}
+            label="Courses"
+            to="/courses"
+            isActive={currentPath === '/courses'}
+            onClick={() => setIsOpen(false)}
+          />
+          <NavLink
+            icon={<BarChart className="w-5 h-5" />}
+            label="Analytics"
+            to="/analytics"
+            isActive={currentPath === '/analytics'}
+            onClick={() => setIsOpen(false)}
+          />
+          {/* <NavLink
             icon={<Bell className="w-5 h-5" />}
             label="Notification"
             to="/notification"
             isActive={currentPath === '/notification'}
             onClick={() => setIsOpen(false)}
-          />
+          /> */}
           <NavLink
             icon={<User className="w-5 h-5" />}
             label="Profile"
